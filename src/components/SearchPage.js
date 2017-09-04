@@ -84,9 +84,7 @@ class SearchPage extends Component {
                 <div className="search-books-results">
                     <BookShelf books={results}
                                title="Search Results"
-                               onShelfChange={(book, value) => {
-                                   onShelfChange(book, value);
-                               }}/>
+                               onShelfChange={onShelfChange}/>
                 </div>
             </div>
         )
