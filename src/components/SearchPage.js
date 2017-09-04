@@ -36,8 +36,7 @@ class SearchPage extends Component {
         BooksAPI.search(query, 20)
             .then((searchResults) => {
                 if (searchResults.length > 0) {
-                    const results = searchResults || [];
-                    this.setState({results: results});
+                    this.setState({results: searchResults});
                 }
                 else {
                     this.setState({results: []});
