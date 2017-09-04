@@ -29,15 +29,18 @@ class BooksApp extends React.Component {
 
     /**
      * @description Represents a book
-     * @param {string} id - The id of the book
-     * @param {string} shelf - The  shelf to move to
+     * @param {string} book - Reference to the book
+     * @param {string} value - The  shelf to move to
      */
-    updateShelf(id, shelf) {
-        BooksAPI.update({id}, shelf)
-            .then(() => {
-                this.fetchAndStoreBooks();
-            });
-    }
+    updateStatus = (book, value) => {
+        book.shelf = value;
+
+        BooksAPI.update(book, value).then(response => {
+            this.setState(state => ({
+                books: state.books.filter(b => b.id !== book.id).concat([book])
+            }));
+        });
+    };
 
     render() {
         return (
@@ -45,16 +48,16 @@ class BooksApp extends React.Component {
                 <Route path="/search" render={() => {
                     return (
                         <SearchPage books={this.state.books}
-                                    onShelfChange={(id, shelf) => {
-                                        this.updateShelf(id, shelf);
+                                    onShelfChange={(book, value) => {
+                                        this.updateStatus(book, value);
                                     }}/>
                     )
                 }}/>
                 <Route exact path="/" render={() => {
                     return (
                         <BookList books={this.state.books}
-                                  onShelfChange={(id, shelf) => {
-                                      this.updateShelf(id, shelf);
+                                  onShelfChange={(book, value) => {
+                                      this.updateStatus(book, value);
                                   }}/>
                     )
                 }}/>

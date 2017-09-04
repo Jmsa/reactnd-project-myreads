@@ -25,7 +25,7 @@ class BookShelf extends Component {
                                               shelf={book.shelf}
                                               key={index}
                                               onShelfChange={(shelf) => {
-                                                  onShelfChange(book.id, shelf);
+                                                  onShelfChange(book, shelf);
                                               }}/>
                                     </li>
                                 )

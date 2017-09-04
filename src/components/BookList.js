@@ -35,8 +35,8 @@ class BookList extends Component {
                             return (
                                 <BookShelf books={books.filter((book) => book.shelf === shelf.name)}
                                            title={shelf.heading} key={index}
-                                           onShelfChange={(id, shelf) => {
-                                               onShelfChange(id, shelf);
+                                           onShelfChange={(book, value) => {
+                                               onShelfChange(book, value);
                                            }}/>
                             )
                         })}

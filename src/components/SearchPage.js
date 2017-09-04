@@ -53,10 +53,10 @@ class SearchPage extends Component {
      * @param {array} searchResults - New results returned from the api to evaluate.
      * @param {array} currentBooks - Books that are current in a shelve to compare against.
      */
-    matchResultsWithCurrentBooks(searchResults, currentBooks){
-        return searchResults.map((searchResultBook)=>{
-            currentBooks.forEach((currentBook)=>{
-                if(currentBook.id === searchResultBook.id){
+    matchResultsWithCurrentBooks(searchResults, currentBooks) {
+        return searchResults.map((searchResultBook) => {
+            currentBooks.forEach((currentBook) => {
+                if (currentBook.id === searchResultBook.id) {
                     searchResultBook.shelf = currentBook.shelf;
                 } else {
                     searchResultBook.shelf = "none";
@@ -84,8 +84,8 @@ class SearchPage extends Component {
                 <div className="search-books-results">
                     <BookShelf books={results}
                                title="Search Results"
-                               onShelfChange={(id, shelf) => {
-                                   onShelfChange(id, shelf);
+                               onShelfChange={(book, value) => {
+                                   onShelfChange(book, value);
                                }}/>
                 </div>
             </div>
