@@ -36,13 +36,36 @@ class SearchPage extends Component {
         BooksAPI.search(query, 20)
             .then((searchResults) => {
                 if (searchResults.length > 0) {
-                    this.setState({results: searchResults});
+                    const results = this.matchResultsWithCurrentBooks(searchResults, this.props.books);
+                    this.setState({results: results});
                 }
                 else {
                     this.setState({results: []});
                 }
             });
     };
+
+    // TODO: Consider making this more generic and moving out into a helper module.
+    /**
+     * @description Ensure that all results are either matched to current book shelves or set have their shelve
+     * set to "none".
+     * @constructor
+     * @param {array} searchResults - New results returned from the api to evaluate.
+     * @param {array} currentBooks - Books that are current in a shelve to compare against.
+     */
+    matchResultsWithCurrentBooks(searchResults, currentBooks){
+        return searchResults.map((searchResultBook)=>{
+            currentBooks.forEach((currentBook)=>{
+                if(currentBook.id === searchResultBook.id){
+                    searchResultBook.shelf = currentBook.shelf;
+                } else {
+                    searchResultBook.shelf = "none";
+                }
+            });
+
+            return searchResultBook;
+        });
+    }
 
     render() {
         const {results, query} = this.state;
