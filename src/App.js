@@ -27,13 +27,34 @@ class BooksApp extends React.Component {
             });
     }
 
+    /**
+     * @description Represents a book
+     * @param {string} id - The id of the book
+     * @param {string} shelf - The  shelf to move to
+     */
+    updateShelf(id, shelf) {
+        BooksAPI.update({id}, shelf)
+            .then(() => {
+                this.fetchAndStoreBooks();
+            });
+    }
+
     render() {
         return (
             <div className="app">
-                <Route path="/search" component={SearchPage}/>
+                <Route path="/search" render={() => {
+                    return (
+                        <SearchPage onShelfChange={(id, shelf) => {
+                            this.updateShelf(id, shelf);
+                        }}/>
+                    )
+                }}/>
                 <Route exact path="/" render={() => {
                     return (
-                        <BookList books={this.state.books}/>
+                        <BookList books={this.state.books}
+                                  onShelfChange={(id, shelf) => {
+                                      this.updateShelf(id, shelf);
+                                  }}/>
                     )
                 }}/>
             </div>
