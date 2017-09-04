@@ -4,6 +4,8 @@ import BookShelf from './BookShelf';
 
 class BookList extends Component {
 
+    // Define potential shelves.
+    // TODO: Look at making these enums or pulling them from the API response instead of hard-coding.
     shelves = [
         {
             name: `currentlyReading`,
@@ -20,7 +22,7 @@ class BookList extends Component {
     ];
 
     render() {
-        const books = this.props.books;
+        const {books, onShelfChange} = this.props;
 
         return (
             <div className="list-books">
@@ -32,8 +34,10 @@ class BookList extends Component {
                         {this.shelves.map((shelf, index) => {
                             return (
                                 <BookShelf books={books.filter((book) => book.shelf === shelf.name)}
-                                           title={shelf}
-                                           key={index}/>
+                                           title={shelf.heading} key={index}
+                                           onShelfChange={(id, shelf) => {
+                                               onShelfChange(id, shelf);
+                                           }}/>
                             )
                         })}
                     </div>
